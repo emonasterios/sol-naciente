@@ -1,0 +1,28 @@
+name: Deploy Landing with Maps API Key
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Replace __MAPS_API_KEY__ in HTML
+        run: |
+          mkdir public
+          sed "s|__MAPS_API_KEY__|${{ secrets.MAPS_API_KEY }}|g" index.html > public/index.html
+          cp style.css public/
+          cp logo.png public/
+          cp favicon.png public/
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
