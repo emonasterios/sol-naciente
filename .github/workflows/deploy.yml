@@ -8,25 +8,38 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
+
+      # 1) Clonamos el repo en $GITHUB_WORKSPACE
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Replace __MAPS_API_KEY__ in HTML
+      # 2) Debug (listamos para comprobar que estamos en el sitio correcto)
+      - name: List workspace (debug)
         run: |
-          
-          echo "🔧 Reemplazando API KEY..."
-          sed 's|__MAPS_API_KEY__|'"${{ secrets.MAPS_API_KEY }}"'|g' index.html > index.html
-          cp style.css
-          cp logo.png
-          cp favicon.png
+          echo "📂 PWD: $(pwd)"
+          ls -R .
 
-      - name: ✅ Mostrar fragmento del HTML resultante (verificación)
-        run: grep "maps.googleapis" public/index.html || echo "❌ No se encontró la API Key inyectada"
+      # 3) Inyectamos la API Key y copiamos los ficheros a public/
+      - name: Inject Maps API Key & collect assets
+        run: |
+          mkdir -p public
+          # reemplazamos el placeholder __MAPS_API_KEY__ por el secreto real
+          sed "s|__MAPS_API_KEY__|${{ secrets.MAPS_API_KEY }}|g" index.html > public/index.html
+          # copiamos CSS e imágenes
+          cp style.css logo.png favicon.png public/
 
+      # 4) Verificamos que public/index.html ya trae la clave
+      - name: Verify injection
+        run: |
+          echo "🔍 Preview public/index.html:"
+          head -n 3 public/index.html
+
+      # 5) Publicamos con peaceiris/actions-gh-pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
+          # este token ya lo inyecta GitHub automáticamente
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          # muy importante: que coincida con donde creamos public/
           publish_dir: ./public
