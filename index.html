@@ -2,38 +2,50 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
   <title>Centro Sol Naciente – After School & Tutorías</title>
   <link rel="icon" href="favicon.png" type="image/png" />
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Cargar la versión beta de Maps JS API con el componente web -->
+  <!-- Carga la beta de la JS API con Web Components (maps + marker) -->
   <script
     async
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7dCBNkrSx-Sq59JLV1ADaPzd52vKpbz0&libraries=maps,marker&v=beta"
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7dCBNkrSx-Sq59JLV1ADaPzd52vKpbz0&callback=console.debug&libraries=maps,marker&v=beta"
   ></script>
+
   <style>
-    /* Define el tamaño y el estilo del mapa */
+    /* Ajustes mínimos para el mapa */
     gmp-map {
-      display: block;
       height: 400px;
       width: 100%;
       border-radius: 10px;
+      margin-top: 1rem;
     }
   </style>
 </head>
 <body>
   <header>
-    <img src="logo.png" alt="Centro Sol Naciente" class="logo" />
-    <h1 id="main-title">After School y Tutorías en Panamá Oeste</h1>
+    <img
+      src="logo.png"
+      alt="Centro Sol Naciente"
+      class="logo"
+    />
+    <h1 id="main-title">
+      After School y Tutorías en Panamá Oeste
+    </h1>
   </header>
 
   <section class="intro">
     <p>
-      Apoyamos a niños y niñas de Vista Alegre y La Chorrera con tutorías,
-      inglés y actividades recreativas.
+      Apoyamos a niños y niñas de Vista Alegre y La Chorrera
+      con tutorías, inglés y actividades recreativas.
     </p>
-    <a href="https://wa.me/50767705368" class="whatsapp-btn"
+    <a
+      href="https://wa.me/50767705368"
+      class="whatsapp-btn"
       >📱 Habla con nuestro asistente por WhatsApp</a
     >
   </section>
@@ -49,24 +61,18 @@
     </ul>
   </section>
 
-  <!-- Si quieres un Instagram embed, pégalo aquí -->
-  <section class="instagram">
-    <h2>Galería de actividades</h2>
-    <p>Publicaciones seleccionadas desde nuestro Instagram</p>
-    <!-- Código embed de Instagram -->
-  </section>
-
   <section class="mapa">
     <h2>¿Dónde estamos?</h2>
+
+    <!-- El Web Component de Google Maps -->
     <gmp-map
       center="8.881597,-79.756539"
       zoom="15"
-      <!-- Opcional: si creas un Map ID en tu proyecto -->
-      map-id="TU_MAP_ID_AQUÍ"
+      map-id=""
     >
       <gmp-advanced-marker
         position="8.881597,-79.756539"
-        title="Centro Sol Naciente After School"
+        title="Centro Sol Naciente"
       ></gmp-advanced-marker>
     </gmp-map>
   </section>
@@ -83,7 +89,7 @@
   </footer>
 
   <script>
-    // Títulos aleatorios para el header
+    // Titulares aleatorios
     const titles = [
       "After School y Tutorías en Panamá Oeste",
       "¿Buscas apoyo escolar en Vista Alegre o La Chorrera? ¡Estamos cerca!"
