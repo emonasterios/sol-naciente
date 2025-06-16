@@ -2,52 +2,27 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Centro Sol Naciente – After School & Tutorías</title>
   <link rel="icon" href="favicon.png" type="image/png" />
   <link rel="stylesheet" href="style.css" />
-
-  <!-- Carga la beta de la JS API con Web Components (maps + marker) -->
+  
+  <!-- 1) Carga óptima: async + defer -->
+  <!-- 2) Versión estable de la API -->
   <script
-    async
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7dCBNkrSx-Sq59JLV1ADaPzd52vKpbz0&callback=console.debug&libraries=maps,marker&v=beta"
-  ></script>
-
-  <style>
-    /* Ajustes mínimos para el mapa */
-    gmp-map {
-      height: 400px;
-      width: 100%;
-      border-radius: 10px;
-      margin-top: 1rem;
-    }
-  </style>
+    src="https://maps.googleapis.com/maps/api/js?key=TU_API_KEY_AQUÍ&callback=initMap"
+    async defer>
+  </script>
 </head>
 <body>
   <header>
-    <img
-      src="logo.png"
-      alt="Centro Sol Naciente"
-      class="logo"
-    />
-    <h1 id="main-title">
-      After School y Tutorías en Panamá Oeste
-    </h1>
+    <img src="logo.png" alt="Centro Sol Naciente" class="logo" />
+    <h1 id="main-title">After School y Tutorías en Panamá Oeste</h1>
   </header>
 
   <section class="intro">
-    <p>
-      Apoyamos a niños y niñas de Vista Alegre y La Chorrera
-      con tutorías, inglés y actividades recreativas.
-    </p>
-    <a
-      href="https://wa.me/50767705368"
-      class="whatsapp-btn"
-      >📱 Habla con nuestro asistente por WhatsApp</a
-    >
+    <p>Apoyamos a niños y niñas de Vista Alegre y La Chorrera con tutorías, inglés y actividades recreativas.</p>
+    <a href="https://wa.me/50767705368" class="whatsapp-btn">📱 Habla con nuestro asistente por WhatsApp</a>
   </section>
 
   <section class="services">
@@ -63,39 +38,39 @@
 
   <section class="mapa">
     <h2>¿Dónde estamos?</h2>
-
-    <!-- El Web Component de Google Maps -->
-    <gmp-map
-      center="8.881597,-79.756539"
-      zoom="15"
-      map-id=""
-    >
-      <gmp-advanced-marker
-        position="8.881597,-79.756539"
-        title="Centro Sol Naciente"
-      ></gmp-advanced-marker>
-    </gmp-map>
+    <div id="map" style="height:400px; width:100%; border-radius:10px;"></div>
   </section>
 
   <footer>
     <p>Centro Sol Naciente – Panamá Oeste</p>
-    <p>
-      <a
-        href="https://www.instagram.com/solnacientetutorias/"
-        target="_blank"
-        >@solnacientetutorias</a
-      >
-    </p>
+    <p><a href="https://www.instagram.com/solnacientetutorias/" target="_blank">@solnacientetutorias</a></p>
   </footer>
 
   <script>
-    // Titulares aleatorios
+    // Título aleatorio
     const titles = [
       "After School y Tutorías en Panamá Oeste",
       "¿Buscas apoyo escolar en Vista Alegre o La Chorrera? ¡Estamos cerca!"
     ];
     document.getElementById("main-title").innerText =
       titles[Math.floor(Math.random() * titles.length)];
+  </script>
+
+  <script>
+    // 3) Función de callback que llama la API al cargar
+    function initMap() {
+      const destino = { lat: 8.881597, lng: -79.756539 };
+      const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 15,
+        center: destino,
+      });
+      // Marcador estándar
+      new google.maps.Marker({
+        position: destino,
+        map,
+        title: "Centro Sol Naciente",
+      });
+    }
   </script>
 </body>
 </html>
