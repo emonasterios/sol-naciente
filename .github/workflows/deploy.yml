@@ -15,11 +15,15 @@ jobs:
 
       - name: Replace __MAPS_API_KEY__ in HTML
         run: |
-          mkdir public
-          sed "s|__MAPS_API_KEY__|${{ secrets.MAPS_API_KEY }}|g" index.html > public/index.html
+          mkdir -p public
+          echo "🔧 Reemplazando API KEY..."
+          sed 's|__MAPS_API_KEY__|'"${{ secrets.MAPS_API_KEY }}"'|g' index.html > public/index.html
           cp style.css public/
           cp logo.png public/
           cp favicon.png public/
+
+      - name: ✅ Mostrar fragmento del HTML resultante (verificación)
+        run: grep "maps.googleapis" public/index.html || echo "❌ No se encontró la API Key inyectada"
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
